@@ -6,6 +6,7 @@ module.exports = async (srv) => {
    * Action: SendForSignature
    * Set document status to 'pending', add audit log, and (optionally) notify signers.
    */
+
   srv.on('SendForSignature', async (req) => {
     const { documentID } = req.data;
 

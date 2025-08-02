@@ -1,0 +1,6 @@
+ID,UserId,Email,Name,Role,Active,Tenant_ID,createdAt,createdBy,modifiedAt,modifiedBy
+"e3f9c9a0-1234-4abc-9f11-b8c4e8cfd001","jsmith","john.smith@example.com","John Smith","admin",true
+"e3f9c9a0-1234-4abc-9f11-b8c4e8cfd002","adoe","anna.doe@example.com","Anna Doe","signer",true
+"e3f9c9a0-1234-4abc-9f11-b8c4e8cfd003","bwhite","bob.white@example.com","Bob White","viewer",true
+"e3f9c9a0-1234-4abc-9f11-b8c4e8cfd004","kjones","karen.jones@example.com","Karen Jones","signer",true
+"e3f9c9a0-1234-4abc-9f11-b8c4e8cfd005","psingh","priya.singh@example.com","Priya Singh","admin",true

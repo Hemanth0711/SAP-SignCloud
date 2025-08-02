@@ -16,6 +16,8 @@ service SignService {
   entity Signers as projection on signcloud.Signers;
   entity AuditLogs as projection on signcloud.AuditLogs;
   entity Tenants as projection on signcloud.Tenants;
+  entity DocumentCategories as projection on signcloud.DocumentCategories;
+  entity DocumentStatuses as projection on signcloud.DocumentStatuses;
 
   /**
    * Custom action: Send a document for signature.
@@ -42,4 +44,6 @@ service SignService {
    * Action: Cancel a document before signing is complete.
    */
   action CancelDocument(documentID: UUID, reason: String) returns String;
+
+  action AddSignature();
 }

@@ -1,30 +1,38 @@
 using app.signcloud.SignService as service from '../../srv/service';
 
-annotate service.Documents with {
-    Signee @Common.ValueList : {
-        $Type : 'Common.ValueListType',
-        CollectionPath : 'Users',
-        Parameters : [
-            {
-                $Type: 'Common.ValueListParameterInOut',
-                LocalDataProperty: Signee,
-                ValueListProperty: 'Email'
-            },
-            {
-                $Type : 'Common.ValueListParameterDisplayOnly',
-                ValueListProperty : 'Name'
-            },
-            {
-                $Type : 'Common.ValueListParameterDisplayOnly',
-                ValueListProperty : 'UserId'
-            },
-            {
-                $Type : 'Common.ValueListParameterDisplayOnly',
-                ValueListProperty : 'Role'
-            },
-        ]
-    };
-};
+// annotate service.Documents with {
+//     signee_ID @Common.ValueList : {
+//         $Type : 'Common.ValueListType',
+//         CollectionPath : 'Users',
+//         Parameters : [
+//             {
+//                 $Type: 'Common.ValueListParameterInOut',
+//                 LocalDataProperty: signee_ID,
+//                 ValueListProperty: 'Email'
+//             },
+//             {
+//                 $Type : 'Common.ValueListParameterDisplayOnly',
+//                 ValueListProperty : 'Name'
+//             },
+//             {
+//                 $Type : 'Common.ValueListParameterDisplayOnly',
+//                 ValueListProperty : 'UserId'
+//             },
+//             {
+//                 $Type : 'Common.ValueListParameterDisplayOnly',
+//                 ValueListProperty : 'Role'
+//             },
+//         ]
+//     };
+// };
+
+annotate service.DocumentSignees with @(
+      UI.LineItem : [
+    { $Type : 'UI.DataField', Value : signee.Name, Label : 'Name' },
+    { $Type : 'UI.DataField', Value : signee.Email, Label : 'Email' }
+  ]
+);
+
 
 
 annotate service.Documents with {
@@ -63,6 +71,7 @@ annotate service.Documents with {
 };
 
 
+
 annotate service.Documents with @(
     UI.FieldGroup #AddSignatureGroup : {
         $Type : 'UI.FieldGroupType',
@@ -71,6 +80,16 @@ annotate service.Documents with @(
                 $Type : 'UI.DataFieldForAction',
                 Label : 'Add Signature',
                 Action : 'app.signcloud.SignService.EntityContainer/AddSignature'
+            }
+        ]
+    },
+    UI.FieldGroup #SigneeGroup : {
+        $Type : 'UI.FieldGroupType',
+        Data : [
+            {
+                $Type : 'UI.DataFieldForAction',
+                Label : 'Assign Signees',
+                Action : 'app.signcloud.SignService.EntityContainer/AddSignees',
             }
         ]
     },
@@ -111,13 +130,7 @@ annotate service.Documents with @(
                 $Type : 'UI.DataField',
                 Label : 'Business Context',
                 Value : BusinessContext,
-            },
-            {
-                $Type : 'UI.DataField',
-                Label : 'Signee',
-                Value : Signee,
             }
-
             
         ],
     },
@@ -133,6 +146,12 @@ annotate service.Documents with @(
             ID : 'AddSignatureAction',
             Label : 'Add Signature',
             Target : '@UI.FieldGroup#AddSignatureGroup'
+        },
+        {
+            $Type: 'UI.ReferenceFacet',
+            ID: 'SigneesFacet',
+            Label: 'Signees',
+            Target: '@UI.FieldGroup#SigneeGroup'
         }
     ],
     UI.LineItem : [
@@ -160,7 +179,7 @@ annotate service.Documents with @(
             Label : 'Updated At',
             Value : UpdatedAt,
         }
-    ],
+    ]
 );
 
 annotate service.Documents with {

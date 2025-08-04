@@ -20,6 +20,12 @@ entity Users: cuid, managed {
     Tenant        : Association to Tenants; // optional, for multi-tenant SaaS
 }
 
+entity DocumentSignees: cuid, managed {
+    key ID        : UUID @title: 'DocumentSignee ID';
+    document      : Association to Documents;
+    signee        : Association to Users;
+}
+
 // Main document entity
 entity Documents: cuid, managed {
     key ID            : UUID         @title: 'Document ID';
@@ -39,8 +45,10 @@ entity Documents: cuid, managed {
     Version           : Integer64; 
     ExpiryDate        : DateTime;
     Tags              : array of String;  
-    Signee            : String(255);
+    Signees           : Composition of many DocumentSignees on Signees.document = $self;
+
 }
+
 
 // Signers assigned to a document
 entity Signers: cuid, managed {
